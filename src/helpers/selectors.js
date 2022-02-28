@@ -1,35 +1,34 @@
 export function getAppointmentsForDay(state, day) {
   const filteredAppointments = [];
-  state.days.forEach((element) => {
+  state.days.forEach(element => {
     if (element.name === day) {
-      element.appointments.forEach((id) => {
+      element.appointments.forEach(id => {
         filteredAppointments.push(state.appointments[id]);
       });
     }
   });
   return filteredAppointments;
-}
+}  
 
 export function getInterview(state, interview) {
   if (!interview) {
     return null;
   } else {
-    const interviewerInfo = state.interviewers[interview.interviewer];
-    return {
-      student: interview.student,
-      interviewer: interviewerInfo,
-    };
-  }
+    let interviewer = state.interviewers[interview.interviewer];
+    return { ...interview, interviewer };
+}
 }
 
 export function getInterviewersForDay(state, day) {
-  const filteredAppointments = [];
-  state.days.forEach((element) => {
+  const filteredInterviewers = [];
+  state.days.forEach(element => {
     if (element.name === day) {
-      element.interviewers.forEach((id) => {
-        filteredAppointments.push(state.interviewers[id]);
+      if (!day || !element.interviewers || !state)
+      return [];
+      element.interviewers.forEach(id => {
+        filteredInterviewers.push(state.interviewers[id]);
       });
     }
   });
-  return filteredAppointments;
-}
+  return filteredInterviewers;
+} 
